@@ -1,9 +1,15 @@
-import time, sys
-sys.path.insert(0, "/home/markf/dev/bbc/beebium/clients/beebium-python-client/src")
+import os, time, sys
+from pathlib import Path
+# Same variables as fn-rom's beebium tests: BEEBIUM_HOME is required; the ROM
+# dir and server default to its roms/ and build-release/ trees.
+if "BEEBIUM_HOME" not in os.environ: sys.exit("BEEBIUM_HOME must be set to a beebium checkout")
+BEEBIUM=os.environ["BEEBIUM_HOME"]
+sys.path.insert(0, BEEBIUM+"/clients/beebium-python-client/src")
 from beebium.client import Beebium
 from beebium.client.screen import dump_screen
-ROM="/home/markf/dev/bbc/beebium/roms"; SERVER="/home/markf/dev/bbc/beebium/build-release/src/server/beebium-model-b"
-CLIB="/home/markf/dev/bbc/cc65-clib/roms/clib.rom"
+ROM=os.environ.get("BEEBIUM_ROM_DIR", BEEBIUM+"/roms")
+SERVER=os.environ.get("BEEBIUM_SERVER", BEEBIUM+"/build-release/src/server/beebium-model-b")
+CLIB=str(Path(__file__).resolve().parents[2]/"roms"/"clib.rom")  # this repo's build
 name=sys.argv[1]; ssd=name+".ssd"
 ex=["--sideways","12:rom:"+ROM+"/acorn-dfs_2_26.rom","--fdc","acorn-1770","--floppy","0:"+ssd,"--sideways","13:rom:"+CLIB]
 with Beebium.launch(server_filepath=SERVER, mos_filepath=ROM+"/acorn-mos_1_20.rom", basic_filepath=ROM+"/bbc-basic_2.rom", extra_args=ex) as bbc:
