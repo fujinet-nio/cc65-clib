@@ -75,7 +75,7 @@ def _launch_kwargs() -> dict:
     kwargs = {
         "mos_filepath": str(rom_dir / "acorn-mos_1_20.rom"),
         "basic_filepath": str(rom_dir / "bbc-basic_2.rom"),
-        "server_filepath": str(os.environ["BEEBIUM_SERVER"]),
+        "server": str(os.environ["BEEBIUM_SERVER"]),
     }
     port = os.environ.get("BEEBIUM_PORT", "").strip()
     if port:

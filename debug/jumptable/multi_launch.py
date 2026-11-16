@@ -11,8 +11,8 @@ ROM=os.environ.get("BEEBIUM_ROM_DIR", BEEBIUM+"/roms")
 SERVER=os.environ.get("BEEBIUM_SERVER", BEEBIUM+"/build-release/src/server/beebium-model-b")
 CLIB=str(Path(__file__).resolve().parents[2]/"roms"/"clib.rom")  # this repo's build
 def once(i):
-    ex=["--sideways","12:rom:"+ROM+"/acorn-dfs_2_26.rom","--fdc","acorn-1770","--floppy","0:VECFAIL.ssd","--sideways","13:rom:"+CLIB]
-    with Beebium.launch(server_filepath=SERVER, mos_filepath=ROM+"/acorn-mos_1_20.rom", basic_filepath=ROM+"/bbc-basic_2.rom", extra_args=ex) as bbc:
+    ex=["--sideways","slot=12:type=rom:image="+ROM+"/acorn-dfs_2_26.rom","--fdc","acorn-1770","--floppy","0:VECFAIL.ssd","--sideways","slot=13:type=rom:image="+CLIB]
+    with Beebium.launch(server=SERVER, mos_filepath=ROM+"/acorn-mos_1_20.rom", basic_filepath=ROM+"/bbc-basic_2.rom", extra_args=ex) as bbc:
         bbc.debugger.reset(); bbc.debugger.run(); time.sleep(1.5)
         # is the CLIB ROM actually loaded in slot 13 this launch?
         try: rom_ok = bbc.sideways.read_slot_data(13,9,9)==b'cc65 CLIB'
