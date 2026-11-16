@@ -92,16 +92,16 @@ def launch(disc_short_name=None, mode: str = "bbc", with_clib_rom=None):
         with_clib_rom = mode == "bbc-clib"
 
     extra = [
-        "--sideways", f"{DFS_SLOT}:rom:{DFS_ROM}",
+        "--sideways", f"slot={DFS_SLOT}:type=rom:image={DFS_ROM}",
         "--fdc", "acorn-1770",
     ]
     if with_clib_rom:
-        extra += ["--sideways", f"{CLIB_SLOT}:rom:{CLIB_ROM}"]
+        extra += ["--sideways", f"slot={CLIB_SLOT}:type=rom:image={CLIB_ROM}"]
     if disc_short_name is not None:
         extra += ["--floppy", f"0:{disc_path(disc_short_name, mode)}"]
 
     with Beebium.launch(
-        server_filepath=str(BEEBIUM_SERVER),
+        server=str(BEEBIUM_SERVER),
         mos_filepath=str(MOS_ROM),
         basic_filepath=str(BASIC_ROM),
         extra_args=extra,
@@ -166,14 +166,14 @@ def launch_shared(mode: str = "bbc"):
     callers can inspect it immediately.
     """
     extra = [
-        "--sideways", f"{DFS_SLOT}:rom:{DFS_ROM}",
+        "--sideways", f"slot={DFS_SLOT}:type=rom:image={DFS_ROM}",
         "--fdc", "acorn-1770",
     ]
     if mode == "bbc-clib":
-        extra += ["--sideways", f"{CLIB_SLOT}:rom:{CLIB_ROM}"]
+        extra += ["--sideways", f"slot={CLIB_SLOT}:type=rom:image={CLIB_ROM}"]
 
     with Beebium.launch(
-        server_filepath=str(BEEBIUM_SERVER),
+        server=str(BEEBIUM_SERVER),
         mos_filepath=str(MOS_ROM),
         basic_filepath=str(BASIC_ROM),
         extra_args=extra,

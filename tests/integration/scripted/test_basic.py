@@ -22,7 +22,7 @@ BEEBIUM_SERVER, MOS_ROM, BASIC_ROM, DFS_ROM = rom_paths()
 
 def _launch(extra_args=None):
     return Beebium.launch(
-        server_filepath=str(BEEBIUM_SERVER),
+        server=str(BEEBIUM_SERVER),
         mos_filepath=str(MOS_ROM),
         basic_filepath=str(BASIC_ROM),
         extra_args=extra_args or [],
